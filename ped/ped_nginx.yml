@@ -1,0 +1,55 @@
+---
+# PED file for testing NGINX VNF with one input probe accessing Internet
+descriptor_version: 0.3 # 5GTANGO: 0.2, SONATA 0.1, PG-BACKFLIP 0.3
+vendor: "de.upb"
+name: "ped-nginx"
+version: "0.1"
+author: "Deepak Bhardwaj"
+description: "Profiling NGINX VNF with one input probe accessing Internet"
+#Path for NSD & VNFD packages
+service_package: "../services/ns-nginx.tar.gz"
+function_package: "../services/vnfd-nginx.tar.gz"
+
+#Profiling Defination
+service_experiments:
+  - name: "ped-nginx"
+    description: "result of ped-nginx"
+    repetitions: 1
+    time_limit: 240
+    time_warmup: 10
+    target:
+      vendor: "de.upb"
+      name: "ns-nginx-nsd"
+      version: "1.0"
+# Input/Output Probe Defination
+    measurement_points:
+      - name: "mp.input"
+        connection_point: "ns:input"
+        vm_image: "apache-bench-LB"
+      - name: "mp.output1"
+        connection_point: "ns:output1"
+        vm_image: "apache-webserver"
+      - name: "mp.output2"
+        connection_point: "ns:output2"
+        vm_image: "apache-webserver"
+    experiment_parameters:
+      - function: "vnfd-nginx-vm"
+        cmd_start: "./start.sh"
+        cmd_stop: "./stop.sh"
+        cpu_cores: [1, 2, 4]
+        mem_max: [1024, 2048, 4096]
+      - function: "mp.input"
+        cmd_start: "sleep 150;./start.sh"
+        cmd_stop: "./stop.sh"
+        cpu_cores: [1, 2, 4]
+        mem_max: [1024, 2048, 4096]
+      - function: "mp.output1"
+        cmd_start: "./start.sh"
+        cmd_stop: "./stop.sh"
+        cpu_cores: [1, 2]
+        mem_max: 1024
+      - function: "mp.output2"
+        cmd_start: "./start.sh"
+        cmd_stop: "./stop.sh"
+        cpu_cores: [1, 2]
+        mem_max: 1024
