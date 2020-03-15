@@ -1,0 +1,41 @@
+nsd:nsd-catalog:
+  nsd:
+  - constituent-vnfd:
+    - member-vnf-index: 1
+      vnfd-id-ref: vnfd-nginx
+    description: "Example NSD of NGINX VNF with 1 input Probe accessing internet"
+    id: ns-nginx-nsd
+#   logo:
+    name: nginx-nsd
+    short-name: ng-nsd
+    vendor: de.upb
+    version: '1.0'
+    vld:
+    - id: ns-nginx-nsd-vld1-mgmt
+      mgmt-network: 'true'
+      name: ns-nginx-nsd-vld1-mgmt
+      short-name: ns-nginx-nsd-vld1-mgmt
+      type: ELAN
+      vim-network-name: mgmt
+      vnfd-connection-point-ref:
+      - member-vnf-index-ref: 1
+        vnfd-connection-point-ref: eth1-mgmt
+        vnfd-id-ref: vnfd-nginx
+    - id: ns-nginx-nsd-vld1-data1
+      name: ns-nginx-nsd-vld1-data1
+      short-name: ns-nginx-nsd-vld1-data
+      type: ELAN
+      vim-network-name: data1
+      vnfd-connection-point-ref:
+      - member-vnf-index-ref: 1
+        vnfd-connection-point-ref: eth0-data1
+        vnfd-id-ref: vnfd-nginx
+    - id: ns-nginx-nsd-vld1-data2
+      name: ns-nginx-nsd-vld1-data2
+      short-name: ns-nginx-nsd-vld1-data2
+      type: ELAN
+      vim-network-name: data2
+      vnfd-connection-point-ref:
+      - member-vnf-index-ref: 1
+        vnfd-connection-point-ref: eth0-data2
+        vnfd-id-ref: vnfd-nginx
